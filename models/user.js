@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
     email: {
         type: String,
         require: true,
-        unique: true //no two users can share the same email address. 
+        //unique: true commented out for testing...that was annoying
     },
     username: {
         type: String,
@@ -38,8 +38,7 @@ module.exports.getUserByUsername = function(username, callback){
 }
 //pass in 10 which means Number of rounds to use.  (Default is 10 anyways but I will pass 10)
 //reference in case I forget www.npmjs.com/package/bcryptjs
-//so it is confusing but this returns the hashed password.  
-//https://busy.org/@nafestw/mean-tutorial-part-2-adding-a-user-model was a great tutorial for this.  
+//In the first line this function calls bycrypt.genSalt() to generate a salt for our password hash. After the salt has been computed a callback function is called with the salt. This function passes the password and the salt to bcrypt.hash() to compute the hash. bcrypt.hash() again calls a callback function as soon as the hash has been computed. In this callback the password of the user object is replaced with the hash and the mongoose save() function is called to store the object in the database. save() receives the callback passed to the addUser() function and calls it when the user has been stored successfully. 
 module.exports.addUser = function(newUser, callback){ //I did the callback in the route user.js where it gives success or fail and res.sends success or fail.
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {

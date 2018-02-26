@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //cannot get/ This will end up going to the front end index file, but I will just add this to see if it's working.  
 app.get('/', function(req,res){res.send('Sending Response')})
 
-//anything with this endpoint will go to the users file. I am saying I want to goto /users for my user routes. const users = require('./routes/users'); 
+//anything with this endpoint will go to the users file. I am saying I want to goto /users for my user routes. const users = require('./routes/users');  ok just found out after an hour of trying to find errors, this app.use bodyparser.jason has to above defining the users file.  thanks stackoverlow, and no errors.....now postman post on register url is working
 app.use(bodyParser.json());
 app.use('/users', users)
 

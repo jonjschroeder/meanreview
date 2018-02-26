@@ -15,7 +15,7 @@ router.post('/register', (req,res,next) =>{
         username: req.body.username,
         password: req.body.password  //I will run this password through bcrypt.hash which will has before db.
     });
-    User.addUser(newUser, (err, user) =>{ //I will create this addUser function inside the models user.js
+    User.addUser(newUser, function(err, user){ //I will create this addUser function inside the models user.js
         if(err){
             console.log(err);
             res.json({success:false, msg:'Registration Failed!'})
