@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
     email: {
         type: String,
         require: true,
-        //unique: true commented out for testing...that was annoying
+      
     },
     username: {
         type: String,
@@ -34,7 +34,7 @@ module.exports.getUserById = function(id, callback){
 
 module.exports.getUserByUsername = function(username, callback){
     const query = {username:username} //findOne function takes in query
-    User.findOne(query, callback);
+    User.findOne(query, callback); //returns first occurence in the selection.  The first parameter is a query object.THe call back I will pass in in the users.js
 }
 //pass in 10 which means Number of rounds to use.  (Default is 10 anyways but I will pass 10)
 //reference in case I forget www.npmjs.com/package/bcryptjs
@@ -47,5 +47,12 @@ module.exports.addUser = function(newUser, callback){ //I did the callback in th
       newUser.save(callback);
     });
   });
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback){
+    bcrypt.compare(candidatePassword, hash, function(err, isMatch){
+        if(err) throw err;
+        callback(null, isMatch);
+    });
 }
 //I will use the chrome developer tool postman to see if the database is working.
