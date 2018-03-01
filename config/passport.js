@@ -4,19 +4,19 @@ const User = require('../models/user'); //bring in model
 const config = require('../config/database'); //database config
 
 module.exports = function(passport){
-
     let opts = {}; //options is an object literal containing options to control how token is extracted.
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt")  //jwt changing up their documentation, went through this 6 months ago as well 
+    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')  //jwt changing up their documentation, went through this 6 months ago as well 
     opts.secretOrKey = config.secret; //string containing the secret or pem encoded public key verifying the tokens signiture
-    passport.use(new JwtStrategy(opts, (jwt_payload,done)=>{  
-        User.getUserById(jwt_payload._doc._id, (err, user)=>{  //jwt_payload._id is wrong because you have to gointo _doc to obtain the id
+    passport.use(new JwtStrategy(opts, (jwt_payload,done)=>{
+        console.log(jwt_payload);  
+        User.getUserById(jwt_payload.data._id, (err, user)=>{  //jwt_payload._id is wrong because you have to gointo _doc to obtain the id
             if(err){
                 return done(err,false);
             }
             if(user){
                 return done(null, user);
             }else{
-                return done(null,done);
+                return done(null,false);
             }
         });
     }));

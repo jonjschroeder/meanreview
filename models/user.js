@@ -30,6 +30,7 @@ const User = module.exports = mongoose.model('User', UserSchema);
 //Create two functions.  Get the user by ID and get the user by username.  Of course I need to do module.exports to use it outside. 
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback);
+    console.log("got user by id")
 }
 
 module.exports.getUserByUsername = function(username, callback){
@@ -45,6 +46,7 @@ module.exports.addUser = function(newUser, callback){ //I did the callback in th
       if(err) throw err;
       newUser.password = hash;
       newUser.save(callback);
+      console.log("new user has been added")
     });
   });
 }
@@ -53,6 +55,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     bcrypt.compare(candidatePassword, hash, function(err, isMatch){
         if(err) throw err;
         callback(null, isMatch);
+        console.log("compare pass complete")
     });
 }
 //I will use the chrome developer tool postman to see if the database is working.
