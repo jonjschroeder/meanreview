@@ -1,0 +1,27 @@
+<h3>Registration</h3>
+
+<form (submit)="Register()">
+
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <input id="name" type="text" [(ngModel)]= "name" class="form-control" name="name" placeholder="Name">
+  </div>
+
+    <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-share"></i></span>
+    <input id="username" type="text" [(ngModel)]= "username" class="form-control" name="username" placeholder="Username">
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+    <input id="eamil" type="text" [(ngModel)]= "email" class="form-control" name="email" placeholder="Email">
+  </div>
+
+
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <input id="password" type="password" [(ngModel)]= "password" class="form-control" name="Password" placeholder="Password">
+  </div>
+
+    <input type="submit" value="Register" class="btn btn-success">
+</form>
