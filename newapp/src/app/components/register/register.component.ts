@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+//Don't forget to inject the imported services.
 
 @Component({
   selector: 'app-register',
@@ -13,7 +16,7 @@ export class RegisterComponent implements OnInit {
   email: String;
   password: String;
 
-  constructor(private validateService: ValidateService, private flashMsg: FlashMessagesService) { }
+  constructor(private validateService: ValidateService, private flashMsg: FlashMessagesService,private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -21,11 +24,11 @@ export class RegisterComponent implements OnInit {
   Register(){
     const user = {
       name: this.name,
-      email: this.email,
       username: this.username,
+      email: this.email,
       password: this.password
     }
-        if(!this.validateService.validateRegister(user)){ //If not false then they're not all filled
+    if(!this.validateService.validateRegister(user)){ //If not false then they're not all filled
       this.flashMsg.show('All values are not filled', {cssClass: 'alert-danger', timeout:2500});
       return false;
     }
@@ -33,6 +36,17 @@ export class RegisterComponent implements OnInit {
       this.flashMsg.show('Not Valid Email', {cssClass: 'alert-danger', timeout:2500});
       return false;
     }
+    this.authService.registerUser(user).subscribe(data => {
+      if(data.success){
+        this.flashMsg.show('You are now registered', {cssClass: 'alert-success', timeout:2500});
+        this.router.navigate(['/login'])
+        console.log('worked')
+      }else{
+        this.flashMsg.show('registration failed.  email must be unique to the username', {cssClass: 'alert-danger', timeout:2500});
+        console.log("didnt work")
+        this.router.navigate(['/register'])
+      }
+    })
 
   }
 }

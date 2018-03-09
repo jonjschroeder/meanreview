@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
@@ -15,7 +15,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotarouteComponent } from './components/notaroute/notaroute.component';
 
 import {ValidateService} from './services/validate.service';
-import {FlashMessagesModule} from 'angular2-flash-messages'
+import {AuthService} from './services/auth.service';
+import {FlashMessagesModule} from 'angular2-flash-messages';
+
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -44,7 +46,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot()
   ],
-  providers: [ValidateService],
+  providers: [ValidateService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
